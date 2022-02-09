@@ -42,7 +42,7 @@ export class Client {
       owner: context.repo.owner,
       repo: context.repo.repo,
       pull_number: pullRequest.number,
-      body: pullRequest.body,
+      body: pullRequest.body ?? "",
     });
   }
 }

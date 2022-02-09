@@ -11,7 +11,7 @@ export function write(tags: Tag[], data: string): string {
     });
   }
 
-  let populatedData: string;
+  let populatedData = "";
 
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] != "") {

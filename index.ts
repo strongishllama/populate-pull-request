@@ -13,23 +13,19 @@ async function run(): Promise<void> {
 
   const pullRequest = await client.getPullRequest();
 
-  const tags = read(pullRequest.body);
+  const tags = read(pullRequest.body ?? "");
   if (tags.length === 0) {
     console.log("No tags found in this pull request body.");
     return;
   }
 
-  let jiraClient: Client;
+  let jiraClient = new Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
 
   for (let i = 0; i < tags.length; i++) {
     switch (tags[i].key) {
       case Key.JIRA_ISSUE:
-        if (jiraClient === undefined) {
-          jiraClient = new Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
-        }
-
         const matches = pullRequest.title.match(new RegExp("[A-Z]+-[0-9]+"));
-        if (matches.length === 0) {
+        if (matches === null || matches.length === 0) {
           throw new Error("Unable to find Jira issue key in pull request title");
         }
 
@@ -42,7 +38,7 @@ async function run(): Promise<void> {
     }
   }
 
-  pullRequest.body = write(tags, pullRequest.body);
+  pullRequest.body = write(tags, pullRequest.body ?? "");
   client.updatePullRequest(pullRequest);
 }
 
