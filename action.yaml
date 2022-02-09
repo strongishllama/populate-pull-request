@@ -1,0 +1,21 @@
+name: Populate Pull Request
+description: Populate parts of your pull request automatically using tags.
+author: Taliesin Millhouse
+
+inputs:
+  github-token:
+    description: "The GitHub token that is available in all actions via {{ secrets.GITHUB_TOKEN }}."
+    required: true
+  jira-api-token:
+    description: "The Jira API token use to access the JIRA REST API and the email address associated with the account that created it in this format <email address>:<api token>."
+    required: true
+  jira-domain-name:
+    description: "The domain name of your Jira Organization, for example your-company.atlassian.net."
+    required: true
+
+runs:
+  using: node16
+  main: index.js
+branding:
+  icon: terminal
+  color: gray-dark

@@ -1,0 +1,19 @@
+{
+  "name": "@strongishllama/populate-pull-request",
+  "version": "0.1.0",
+  "description": "Automatically populate pull requests based on predefined tags.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Taliesin Millhouse",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "node-fetch": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.16"
+  }
+}
