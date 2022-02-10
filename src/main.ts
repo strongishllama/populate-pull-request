@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
-import * as action from "./lib/action";
-import { Client } from "./lib/jira";
-import { Key, read, write } from "./lib/tag";
+import * as action from "./action";
+import { Client } from "./jira";
+import { Key, read, write } from "./tag";
 
 async function run(): Promise<void> {
   const client = new action.Client(core.getInput("github-token"));
