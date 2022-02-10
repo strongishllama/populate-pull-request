@@ -1,2 +1,2 @@
-export const START_TAG = "<!-- PULL REQUEST POPULATE START TAG -->";
-export const END_TAG = "<!-- PULL REQUEST POPULATE END TAG -->";
+export const START_TAG = "<!-- POPULATE PULL REQUEST START TAG -->";
+export const END_TAG = "<!-- POPULATE PULL REQUEST END TAG -->";
