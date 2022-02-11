@@ -20,4 +20,4 @@ jobs:
   package:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     name: Package
-    uses: strongishllama/github-actions/.github/workflows/typescript-action-package.yml
+    uses: strongishllama/github-actions/.github/workflows/typescript-action-package.yml@main
