@@ -3,9 +3,14 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
-
+      interval: "weekly"
+      day: "saturday"
+      time: "03:00"
+      timezone: "Australia/Sydney"
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: daily
+      interval: "weekly"
+      day: "saturday"
+      time: "03:00"
+      timezone: "Australia/Sydney"
