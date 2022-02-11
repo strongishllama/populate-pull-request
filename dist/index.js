@@ -12786,7 +12786,6 @@ function run() {
                     if (matches === null || matches.length === 0) {
                         throw new Error("Unable to find Jira issue key in pull request title");
                     }
-                    console.debug(`Fetching issue for key: ${matches[0]}`);
                     const issue = yield jiraClient.getIssue(matches[0]);
                     tags[i].value = `${jiraClient.baseUrl}/browse/${issue.key}`;
                     break;
@@ -12794,6 +12793,7 @@ function run() {
                     throw new Error(`Unknown tag key found: ${tags[i].key}`);
             }
         }
+        console.debug(`Body: ${pullRequest.body}`);
         pullRequest.body = (0, tag_1.write)(tags, (_b = pullRequest.body) !== null && _b !== void 0 ? _b : "");
         client.updatePullRequest(pullRequest);
     });

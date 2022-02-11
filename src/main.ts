@@ -29,7 +29,6 @@ async function run(): Promise<void> {
           throw new Error("Unable to find Jira issue key in pull request title");
         }
 
-        console.debug(`Fetching issue for key: ${matches[0]}`);
         const issue = await jiraClient.getIssue(matches[0]);
 
         tags[i].value = `${jiraClient.baseUrl}/browse/${issue.key}`;
@@ -39,6 +38,7 @@ async function run(): Promise<void> {
     }
   }
 
+  console.debug(`Body: ${pullRequest.body}`);
   pullRequest.body = write(tags, pullRequest.body ?? "");
   client.updatePullRequest(pullRequest);
 }
