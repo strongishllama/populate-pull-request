@@ -12672,7 +12672,7 @@ class Client {
                 },
             });
             if (!response.ok) {
-                throw new Error(`Unexpected response returned: ${response.body}`);
+                throw new Error(`Unexpected response returned: ${yield response.json()}`);
             }
             return (yield response.json());
         });

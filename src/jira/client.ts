@@ -17,7 +17,7 @@ export class Client {
       },
     });
     if (!response.ok) {
-      throw new Error(`Unexpected response returned: ${response.body}`);
+      throw new Error(`Unexpected response returned: ${await response.json()}`);
     }
 
     return (await response.json()) as Issue;
