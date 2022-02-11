@@ -12793,8 +12793,8 @@ function run() {
                     throw new Error(`Unknown tag key found: ${tags[i].key}`);
             }
         }
-        console.debug(`Body: ${pullRequest.body}`);
         pullRequest.body = (0, tag_1.write)(tags, (_b = pullRequest.body) !== null && _b !== void 0 ? _b : "");
+        console.debug(`Body: ${pullRequest.body}`);
         client.updatePullRequest(pullRequest);
     });
 }

@@ -38,8 +38,8 @@ async function run(): Promise<void> {
     }
   }
 
-  console.debug(`Body: ${pullRequest.body}`);
   pullRequest.body = write(tags, pullRequest.body ?? "");
+  console.debug(`Body: ${pullRequest.body}`);
   client.updatePullRequest(pullRequest);
 }
 
