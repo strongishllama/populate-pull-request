@@ -17,10 +17,10 @@ export function read(data: string): Tag[] {
 
   // Validate the indexes.
   if (startTagIndex === -1) {
-    throw new Error(`Start tag ${START_TAG} was not found`);
+    throw new Error(`Start tag ${START_TAG} was not found in ${data}`);
   }
   if (endTagIndex === -1) {
-    throw new Error(`End tag ${END_TAG} was not found`);
+    throw new Error(`End tag ${END_TAG} was not found in ${data}`);
   }
   if (endTagIndex < startTagIndex) {
     throw new Error(`End tag ${END_TAG} was found before the start tag ${START_TAG}`);
