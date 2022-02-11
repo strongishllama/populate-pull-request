@@ -2,16 +2,18 @@ import { Issue } from "./issue";
 import fetch from "node-fetch";
 
 export class Client {
-  public baseUrl: string;
+  public browseBaseUrl = "https://maxkelsen.atlassian.net/browse/POP-169";
+  private apiBaseUrl: string;
   private encodedApiToken: string;
 
   public constructor(apiToken: string, domainName: string) {
-    this.baseUrl = `https://${domainName}/rest/api/3`;
+    this.browseBaseUrl = `https://${domainName}/browse`;
+    this.apiBaseUrl = `https://${domainName}/rest/api/3`;
     this.encodedApiToken = Buffer.from(apiToken).toString("base64");
   }
 
   public async getIssue(key: string): Promise<Issue> {
-    const response = await fetch(`${this.baseUrl}/issue/${key}?fields=summary`, {
+    const response = await fetch(`${this.apiBaseUrl}/issue/${key}?fields=summary`, {
       headers: {
         Authorization: `Basic ${this.encodedApiToken}`,
       },

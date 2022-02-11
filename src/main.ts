@@ -31,7 +31,7 @@ async function run(): Promise<void> {
 
         const issue = await jiraClient.getIssue(matches[0]);
 
-        tags[i].value = `${jiraClient.baseUrl}/browse/${issue.key}`;
+        tags[i].value = `${jiraClient.browseBaseUrl}/${issue.key}`;
         break;
       default:
         throw new Error(`Unknown tag key found: ${tags[i].key}`);
@@ -39,7 +39,6 @@ async function run(): Promise<void> {
   }
 
   pullRequest.body = write(tags, pullRequest.body ?? "");
-  console.debug(`Body: ${pullRequest.body}`);
   client.updatePullRequest(pullRequest);
 }
 

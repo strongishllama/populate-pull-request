@@ -12661,12 +12661,14 @@ exports.Client = void 0;
 const node_fetch_1 = __importDefault(__nccwpck_require__(4429));
 class Client {
     constructor(apiToken, domainName) {
-        this.baseUrl = `https://${domainName}/rest/api/3`;
+        this.browseBaseUrl = "https://maxkelsen.atlassian.net/browse/POP-169";
+        this.browseBaseUrl = `https://${domainName}/browse`;
+        this.apiBaseUrl = `https://${domainName}/rest/api/3`;
         this.encodedApiToken = Buffer.from(apiToken).toString("base64");
     }
     getIssue(key) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield (0, node_fetch_1.default)(`${this.baseUrl}/issue/${key}?fields=summary`, {
+            const response = yield (0, node_fetch_1.default)(`${this.apiBaseUrl}/issue/${key}?fields=summary`, {
                 headers: {
                     Authorization: `Basic ${this.encodedApiToken}`,
                 },
@@ -12787,14 +12789,13 @@ function run() {
                         throw new Error("Unable to find Jira issue key in pull request title");
                     }
                     const issue = yield jiraClient.getIssue(matches[0]);
-                    tags[i].value = `${jiraClient.baseUrl}/browse/${issue.key}`;
+                    tags[i].value = `${jiraClient.browseBaseUrl}/${issue.key}`;
                     break;
                 default:
                     throw new Error(`Unknown tag key found: ${tags[i].key}`);
             }
         }
         pullRequest.body = (0, tag_1.write)(tags, (_b = pullRequest.body) !== null && _b !== void 0 ? _b : "");
-        console.debug(`Body: ${pullRequest.body}`);
         client.updatePullRequest(pullRequest);
     });
 }
@@ -12926,9 +12927,6 @@ function write(tags, data) {
     const lines = data.split("\n");
     for (let i = 0; i < lines.length; i++) {
         for (const tag of tags) {
-            console.debug(`- [${tag.key}]()`);
-            console.debug(lines[i].trim());
-            console.debug(`- [${tag.key}]()` === lines[i].trim());
             if (`- [${tag.key}]()` === lines[i].trim()) {
                 lines[i] = `- [${tag.key}](${tag.value})`;
             }
