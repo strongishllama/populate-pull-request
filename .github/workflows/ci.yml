@@ -11,4 +11,4 @@ on:
 jobs:
   lint:
     name: Lint
-    uses: strongishllama/github-actions/actions/typescript/lint.yml@main
+    uses: strongishllama/github-actions/.github/workflows/typescript-lint.yml@main
