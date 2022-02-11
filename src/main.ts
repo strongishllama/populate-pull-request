@@ -22,7 +22,7 @@ async function run(): Promise<void> {
   let jiraClient = new Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
 
   for (let i = 0; i < tags.length; i++) {
-    switch (tags[i].key) {
+    switch (tags[i].key.trim()) {
       case Key.JIRA_ISSUE:
         const matches = pullRequest.title.match(new RegExp("[A-Z]+-[0-9]+"));
         if (matches === null || matches.length === 0) {

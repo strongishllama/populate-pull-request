@@ -12780,7 +12780,7 @@ function run() {
         }
         let jiraClient = new jira_1.Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
         for (let i = 0; i < tags.length; i++) {
-            switch (tags[i].key) {
+            switch (tags[i].key.trim()) {
                 case tag_1.Key.JIRA_ISSUE:
                     const matches = pullRequest.title.match(new RegExp("[A-Z]+-[0-9]+"));
                     if (matches === null || matches.length === 0) {
@@ -12854,10 +12854,6 @@ function read(data) {
     let startTagIndex = -1;
     let endTagIndex = -1;
     for (let i = 0; i < lines.length; i++) {
-        console.debug(lines[i]);
-        console.debug(constants_1.START_TAG);
-        console.debug(lines[i] == constants_1.START_TAG);
-        console.debug(lines[i].trim() === constants_1.START_TAG);
         if (lines[i].trim() === constants_1.START_TAG) {
             startTagIndex = i;
         }
