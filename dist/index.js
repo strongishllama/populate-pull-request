@@ -12665,6 +12665,7 @@ class Client {
         this.encodedApiToken = Buffer.from(apiToken).toString("base64");
     }
     getIssue(key) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield (0, node_fetch_1.default)(`${this.baseUrl}/issue/${key}?fields=summary`, {
                 headers: {
@@ -12672,7 +12673,7 @@ class Client {
                 },
             });
             if (!response.ok) {
-                throw new Error(`Unexpected response returned: ${yield response.json()}`);
+                throw new Error(`Unexpected status code: ${response.status} and body returned: ${(_a = response.body) === null || _a === void 0 ? void 0 : _a.read().toString()}`);
             }
             return (yield response.json());
         });
