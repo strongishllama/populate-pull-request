@@ -17,7 +17,7 @@ export class Client {
       },
     });
     if (!response.ok) {
-      throw new Error(`Unexpected status code: ${response.status} and body returned: ${response.body?.read().toString()}`);
+      throw new Error(`Unexpected status code: ${response.status}`);
     }
 
     return (await response.json()) as Issue;
