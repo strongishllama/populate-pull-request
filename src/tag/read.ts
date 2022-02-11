@@ -8,13 +8,9 @@ export function read(data: string): Tag[] {
   let endTagIndex = -1;
 
   for (let i = 0; i < lines.length; i++) {
-    console.debug(lines[i]);
-    console.debug(START_TAG);
-    console.debug(lines[i] == START_TAG);
-    console.debug(lines[i].trim() === START_TAG);
     if (lines[i].trim() === START_TAG) {
       startTagIndex = i;
-    } else if (lines[i] === END_TAG) {
+    } else if (lines[i].trim() === END_TAG) {
       endTagIndex = i;
     }
   }

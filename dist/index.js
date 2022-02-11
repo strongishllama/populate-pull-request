@@ -12861,7 +12861,7 @@ function read(data) {
         if (lines[i].trim() === constants_1.START_TAG) {
             startTagIndex = i;
         }
-        else if (lines[i] === constants_1.END_TAG) {
+        else if (lines[i].trim() === constants_1.END_TAG) {
             endTagIndex = i;
         }
     }
