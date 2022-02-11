@@ -14,7 +14,7 @@ jobs:
     uses: strongishllama/github-actions/.github/workflows/typescript-lint.yml@main
   package-dry-run:
     name: Package Dry Run
-    uses: strongishllama/github-actions/.github/workflows/typescript-action-package.yml
+    uses: strongishllama/github-actions/.github/workflows/typescript-action-package.yml@main
     with:
       dry-run: true
   package:
