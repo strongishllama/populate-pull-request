@@ -1,12 +1,12 @@
 import { context, getOctokit } from "@actions/github/lib/github";
-import { GitHub } from "@actions/github/lib/utils";
 import { Event } from "./event";
+import { GitHub } from "@actions/github/lib/utils";
 import { PullRequest } from "./types";
 
 export class Client {
   private github: InstanceType<typeof GitHub>;
 
-  constructor(token: string) {
+  public constructor(token: string) {
     this.github = getOctokit(token);
   }
 
@@ -25,12 +25,12 @@ export class Client {
   }
 
   private pullRequestNumber(): number {
-    if (context.eventName != Event.PULL_REQUEST && context.eventName != Event.PULL_REQUEST_TARGET) {
+    if (context.eventName !== Event.PULL_REQUEST && context.eventName !== Event.PULL_REQUEST_TARGET) {
       return 0;
     }
 
     const parts = context.ref.split("/");
-    if (parts.length != 4) {
+    if (parts.length !== 4) {
       return 0;
     }
 

@@ -15219,11 +15219,11 @@ class Client {
         });
     }
     pullRequestNumber() {
-        if (github_1.context.eventName != event_1.Event.PULL_REQUEST && github_1.context.eventName != event_1.Event.PULL_REQUEST_TARGET) {
+        if (github_1.context.eventName !== event_1.Event.PULL_REQUEST && github_1.context.eventName !== event_1.Event.PULL_REQUEST_TARGET) {
             return 0;
         }
         const parts = github_1.context.ref.split("/");
-        if (parts.length != 4) {
+        if (parts.length !== 4) {
             return 0;
         }
         return parseInt(parts[2]);
@@ -15464,8 +15464,8 @@ run();
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.END_TAG = exports.START_TAG = void 0;
-exports.START_TAG = "<!-- PULL REQUEST POPULATE START TAG -->";
-exports.END_TAG = "<!-- PULL REQUEST POPULATE END TAG -->";
+exports.START_TAG = "<!-- POPULATE PULL REQUEST START TAG -->";
+exports.END_TAG = "<!-- POPULATE PULL REQUEST END TAG -->";
 
 
 /***/ }),
@@ -15501,21 +15501,21 @@ __exportStar(__nccwpck_require__(6587), exports);
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.read = void 0;
-const tag_1 = __nccwpck_require__(3880);
 const constants_1 = __nccwpck_require__(8447);
+const tag_1 = __nccwpck_require__(3880);
 function read(data) {
     // Split the data into lines and find the line index of the start and end tags.
     const lines = data.split("\n");
     let startTagIndex = -1;
     let endTagIndex = -1;
-    lines.forEach((line, index) => {
-        if (line === constants_1.START_TAG) {
-            startTagIndex = index;
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i] === constants_1.START_TAG) {
+            startTagIndex = i;
         }
-        else if (line === constants_1.END_TAG) {
-            endTagIndex = index;
+        else if (lines[i] === constants_1.END_TAG) {
+            endTagIndex = i;
         }
-    });
+    }
     // Validate the indexes.
     if (startTagIndex === -1) {
         throw new Error(`Start tag ${constants_1.START_TAG} was not found`);
@@ -15528,18 +15528,18 @@ function read(data) {
     }
     // Find the lines with empty tags, e.g '- [Foo]()'
     const rawTags = [];
-    for (let i = startTagIndex; i < endTagIndex; i++) {
-        if (!new RegExp("[-][s][[].+[]][(][)]").test(lines[i])) {
+    for (let i = startTagIndex + 1; i < endTagIndex; i++) {
+        if (!new RegExp(/[-][\s][[].+[\]][(][)]/).test(lines[i])) {
             continue;
         }
         rawTags.push(lines[i]);
     }
     // Build the tags objects from the raw tags.
     const tags = [];
-    rawTags.forEach((rt) => {
-        rt = rt.replace("- [", "");
-        tags.push(new tag_1.Tag(rt.replace("] ()", "")));
-    });
+    for (let rawTag of rawTags) {
+        rawTag = rawTag.replace("- [", "");
+        tags.push(new tag_1.Tag(rawTag.replace("]()", "")));
+    }
     return tags;
 }
 exports.read = read;
@@ -15579,15 +15579,15 @@ exports.write = void 0;
 function write(tags, data) {
     const lines = data.split("\n");
     for (let i = 0; i < lines.length; i++) {
-        tags.forEach((t) => {
-            if (`- [${t.key}]()` === lines[i]) {
-                lines[i] = `- [${t.key}](${t.value})`;
+        for (const tag of tags) {
+            if (`- [${tag.key}]()` === lines[i]) {
+                lines[i] = `- [${tag.key}](${tag.value})`;
             }
-        });
+        }
     }
     let populatedData = "";
     for (let i = 0; i < lines.length; i++) {
-        if (lines[i] != "") {
+        if (lines[i] !== "") {
             populatedData += `${lines[i]}\n`;
             continue;
         }

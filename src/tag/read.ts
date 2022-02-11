@@ -1,5 +1,5 @@
+import { END_TAG, START_TAG } from "./constants";
 import { Tag } from "./tag";
-import { START_TAG, END_TAG } from "./constants";
 
 export function read(data: string): Tag[] {
   // Split the data into lines and find the line index of the start and end tags.
@@ -7,13 +7,13 @@ export function read(data: string): Tag[] {
   let startTagIndex = -1;
   let endTagIndex = -1;
 
-  lines.forEach((line, index) => {
-    if (line === START_TAG) {
-      startTagIndex = index;
-    } else if (line === END_TAG) {
-      endTagIndex = index;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i] === START_TAG) {
+      startTagIndex = i;
+    } else if (lines[i] === END_TAG) {
+      endTagIndex = i;
     }
-  });
+  }
 
   // Validate the indexes.
   if (startTagIndex === -1) {
@@ -28,8 +28,8 @@ export function read(data: string): Tag[] {
 
   // Find the lines with empty tags, e.g '- [Foo]()'
   const rawTags: string[] = [];
-  for (let i = startTagIndex; i < endTagIndex; i++) {
-    if (!new RegExp("[-][s][[].+[]][(][)]").test(lines[i])) {
+  for (let i = startTagIndex + 1; i < endTagIndex; i++) {
+    if (!new RegExp(/[-][\s][[].+[\]][(][)]/).test(lines[i])) {
       continue;
     }
 
@@ -38,10 +38,10 @@ export function read(data: string): Tag[] {
 
   // Build the tags objects from the raw tags.
   const tags: Tag[] = [];
-  rawTags.forEach((rt) => {
-    rt = rt.replace("- [", "");
-    tags.push(new Tag(rt.replace("] ()", "")));
-  });
+  for (let rawTag of rawTags) {
+    rawTag = rawTag.replace("- [", "");
+    tags.push(new Tag(rawTag.replace("]()", "")));
+  }
 
   return tags;
 }

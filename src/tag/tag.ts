@@ -6,7 +6,7 @@ export class Tag {
   public key: string;
   public value: string;
 
-  constructor(key: string, value: string = "") {
+  public constructor(key: string, value = "") {
     this.key = key;
     this.value = value;
   }
