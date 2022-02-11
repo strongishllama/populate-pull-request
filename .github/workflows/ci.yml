@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint
+    uses: strongishllama/github-actions/.github/workflows/typescript-lint.yml@main
+  package-dry-run:
+    name: Package Dry Run
+    uses: strongishllama/github-actions/.github/workflows/typescript-action-package.yml
+    with:
+      dry-run: true
+  package:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    name: Package
+    uses: strongishllama/github-actions/.github/workflows/typescript-action-package.yml
