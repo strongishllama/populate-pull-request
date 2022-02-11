@@ -12661,7 +12661,7 @@ exports.Client = void 0;
 const node_fetch_1 = __importDefault(__nccwpck_require__(4429));
 class Client {
     constructor(apiToken, domainName) {
-        this.baseUrl = `https://${domainName}/res/api/3`;
+        this.baseUrl = `https://${domainName}/rest/api/3`;
         this.encodedApiToken = Buffer.from(apiToken).toString("base64");
     }
     getIssue(key) {

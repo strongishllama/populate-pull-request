@@ -6,7 +6,7 @@ export class Client {
   private encodedApiToken: string;
 
   public constructor(apiToken: string, domainName: string) {
-    this.baseUrl = `https://${domainName}/res/api/3`;
+    this.baseUrl = `https://${domainName}/rest/api/3`;
     this.encodedApiToken = Buffer.from(apiToken).toString("base64");
   }
 
