@@ -1,7 +1,8 @@
-import * as core from "@actions/core";
+/* eslint-disable no-console */
 import * as action from "./action";
-import { Client } from "./jira";
+import * as core from "@actions/core";
 import { Key, read, write } from "./tag";
+import { Client } from "./jira";
 
 async function run(): Promise<void> {
   const client = new action.Client(core.getInput("github-token"));
@@ -19,11 +20,11 @@ async function run(): Promise<void> {
     return;
   }
 
-  let jiraClient = new Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
+  const jiraClient = new Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
 
-  for (let i = 0; i < tags.length; i++) {
+  for (const i of tags.keys()) {
     switch (tags[i].key.trim()) {
-      case Key.JIRA_ISSUE:
+      case Key.JIRA_ISSUE: {
         const matches = pullRequest.title.match(new RegExp(/[A-Z]+-[0-9]+/));
         if (matches === null || matches.length === 0) {
           throw new Error("Unable to find Jira issue key in pull request title");
@@ -33,8 +34,10 @@ async function run(): Promise<void> {
 
         tags[i].value = `${jiraClient.browseBaseUrl}/${issue.key}`;
         break;
-      default:
+      }
+      default: {
         throw new Error(`Unknown tag key found: ${tags[i].key}`);
+      }
     }
   }
 

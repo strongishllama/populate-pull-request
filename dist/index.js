@@ -12762,10 +12762,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(2186));
+/* eslint-disable no-console */
 const action = __importStar(__nccwpck_require__(7875));
-const jira_1 = __nccwpck_require__(9273);
+const core = __importStar(__nccwpck_require__(2186));
 const tag_1 = __nccwpck_require__(8789);
+const jira_1 = __nccwpck_require__(9273);
 function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -12780,10 +12781,10 @@ function run() {
             console.log("No tags found in this pull request body.");
             return;
         }
-        let jiraClient = new jira_1.Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
-        for (let i = 0; i < tags.length; i++) {
+        const jiraClient = new jira_1.Client(core.getInput("jira-api-token"), core.getInput("jira-domain-name"));
+        for (const i of tags.keys()) {
             switch (tags[i].key.trim()) {
-                case tag_1.Key.JIRA_ISSUE:
+                case tag_1.Key.JIRA_ISSUE: {
                     const matches = pullRequest.title.match(new RegExp(/[A-Z]+-[0-9]+/));
                     if (matches === null || matches.length === 0) {
                         throw new Error("Unable to find Jira issue key in pull request title");
@@ -12791,8 +12792,10 @@ function run() {
                     const issue = yield jiraClient.getIssue(matches[0]);
                     tags[i].value = `${jiraClient.browseBaseUrl}/${issue.key}`;
                     break;
-                default:
+                }
+                default: {
                     throw new Error(`Unknown tag key found: ${tags[i].key}`);
+                }
             }
         }
         pullRequest.body = (0, tag_1.write)(tags, (_b = pullRequest.body) !== null && _b !== void 0 ? _b : "");
