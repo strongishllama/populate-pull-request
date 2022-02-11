@@ -15509,6 +15509,9 @@ function read(data) {
     let startTagIndex = -1;
     let endTagIndex = -1;
     for (let i = 0; i < lines.length; i++) {
+        console.debug(lines[i]);
+        console.debug(constants_1.START_TAG);
+        console.debug(lines[i] === constants_1.START_TAG);
         if (lines[i] === constants_1.START_TAG) {
             startTagIndex = i;
         }
@@ -15518,10 +15521,10 @@ function read(data) {
     }
     // Validate the indexes.
     if (startTagIndex === -1) {
-        throw new Error(`Start tag ${constants_1.START_TAG} was not found in ${data}`);
+        throw new Error(`Start tag ${constants_1.START_TAG} was not found in:\n${data}`);
     }
     if (endTagIndex === -1) {
-        throw new Error(`End tag ${constants_1.END_TAG} was not found in ${data}`);
+        throw new Error(`End tag ${constants_1.END_TAG} was not found in:\n${data}`);
     }
     if (endTagIndex < startTagIndex) {
         throw new Error(`End tag ${constants_1.END_TAG} was found before the start tag ${constants_1.START_TAG}`);
