@@ -12884,7 +12884,7 @@ function read(data) {
     const tags = [];
     for (let rawTag of rawTags) {
         rawTag = rawTag.replace("- [", "");
-        tags.push(new tag_1.Tag(rawTag.replace("]()", "")));
+        tags.push(new tag_1.Tag(rawTag.replace("]()", "").trim()));
     }
     return tags;
 }

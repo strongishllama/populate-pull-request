@@ -40,7 +40,7 @@ export function read(data: string): Tag[] {
   const tags: Tag[] = [];
   for (let rawTag of rawTags) {
     rawTag = rawTag.replace("- [", "");
-    tags.push(new Tag(rawTag.replace("]()", "")));
+    tags.push(new Tag(rawTag.replace("]()", "").trim()));
   }
 
   return tags;
