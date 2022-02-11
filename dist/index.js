@@ -12783,7 +12783,7 @@ function run() {
         for (let i = 0; i < tags.length; i++) {
             switch (tags[i].key.trim()) {
                 case tag_1.Key.JIRA_ISSUE:
-                    const matches = pullRequest.title.match(new RegExp("[A-Z]+-[0-9]+"));
+                    const matches = pullRequest.title.match(new RegExp(/[A-Z]+-[0-9]+/));
                     if (matches === null || matches.length === 0) {
                         throw new Error("Unable to find Jira issue key in pull request title");
                     }
