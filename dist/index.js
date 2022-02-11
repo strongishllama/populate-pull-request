@@ -12926,6 +12926,9 @@ function write(tags, data) {
     const lines = data.split("\n");
     for (let i = 0; i < lines.length; i++) {
         for (const tag of tags) {
+            console.debug(`- [${tag.key}]()`);
+            console.debug(lines[i].trim());
+            console.debug(`- [${tag.key}]()` === lines[i].trim());
             if (`- [${tag.key}]()` === lines[i].trim()) {
                 lines[i] = `- [${tag.key}](${tag.value})`;
             }
